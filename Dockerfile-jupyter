@@ -1,0 +1,44 @@
+# FROM jupyter/pyspark-notebook:spark-3.4.1
+
+# USER root
+
+# # Set environment variables
+# ENV SPARK_HOME=/usr/local/spark
+# ENV HADOOP_HOME=/usr/local/hadoop
+# ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+
+# # Install PySpark 3.5.0 first
+# RUN pip install pyspark==3.4.1
+
+# # Then install the latest compatible delta-spark
+# RUN pip install delta-spark
+
+# # Copy the spark-defaults.conf file
+# COPY jupyter-config/spark-defaults.conf /usr/local/spark/conf/spark-defaults.conf
+
+# USER jovyan
+
+
+# FROM jupyter/all-spark-notebook:spark-3.4.1
+FROM jupyter/pyspark-notebook:spark-3.4.1
+
+# Install Delta Lake and other necessary Python packages
+RUN pip install \
+    delta-spark==2.4.0 \
+    pyhive \
+    findspark
+
+# Install Java if not already included
+USER root
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/
+ENV PATH=$JAVA_HOME/bin:$PATH
+
+RUN wget https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.1.0/hadoop-aws-3.1.0.jar -P /usr/local/spark/jars/
+RUN wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.11.271/aws-java-sdk-bundle-1.11.271.jar -P /usr/local/spark/jars/
+
+# Create a new directory /home/jovyan/Workspace and give jovyan user access
+RUN mkdir -p /home/jovyan/Workspace && \
+    chown -R jovyan:users /home/jovyan/Workspace
+
+# Change back to jovyan user
+USER $NB_UID

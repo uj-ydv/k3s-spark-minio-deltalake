@@ -1,0 +1,59 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jupyter-ingress
+  namespace: datalab
+  annotations:
+    kubernetes.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+  - host: <url>
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: notebookjupyter
+              port:
+                number: 8888
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-ingress
+  namespace: datalab
+  annotations:
+    kubernetes.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+  - host: <url>
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: minio
+              port:
+                number: 9001
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: spark-ingress
+  namespace: datalab
+  annotations:
+    kubernetes.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+  - host: <url>
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: masterspark
+              port:
+                number: 8080

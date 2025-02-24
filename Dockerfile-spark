@@ -1,0 +1,7 @@
+FROM bitnami/spark:3.4.1
+
+# Switch to root to make changes
+USER root
+
+# Set the working directory
+WORKDIR /opt/bitnami/spark
