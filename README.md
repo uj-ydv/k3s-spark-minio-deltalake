@@ -20,7 +20,11 @@ This project is designed to set up a **DataLab** environment using **Kubernetes 
 
 Follow these steps to set up your environment:
 
-### 1. Create images for Hive, Spark, and Jupyter
+### 1. Create folder hadoop-libs in the project root
+* Download [AWS Java SDK Bundle 1.11.271](https://medium.com/r/?url=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Fcom%2Famazonaws%2Faws-java-sdk-bundle%2F1.11.271%2Faws-java-sdk-bundle-1.11.271.jar) and [Hadoop AWS 3.1.0](https://medium.com/r/?url=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Forg%2Fapache%2Fhadoop%2Fhadoop-aws%2F3.1.0%2Fhadoop-aws-3.1.0.jar)
+* Place jars in hadoop-libs folder
+
+### 2. Create images for Hive, Spark, and Jupyter
    - Build Docker images for Hive, Spark, and Jupyter locally.
    - Example :
      ```bash
@@ -29,14 +33,14 @@ Follow these steps to set up your environment:
      docker build -t jupyter-image -f Dockerfile-jupyter
      ```
 
-### 2. Replace Required Paths and Variables in the Manifest
+### 3. Replace Required Paths and Variables in the Manifest
    - Edit the Kubernetes manifest files to replace the necessary paths and variables, such as image names, volume paths, and environment variables.
 
-### 3. Ingress (Optional)
+### 4. Ingress (Optional)
    - If you'd like to expose the services via an ingress controller, update the URL values in the ingress configuration.
    - Alternatively, you can use **NodePort** for local access.
 
-### 4. Apply the Manifest and Ingress
+### 5. Apply the Manifest and Ingress
    - Deploy the services to the cluster using the following command:
      ```bash
      kubectl apply -f <path-to-manifest>.yaml
