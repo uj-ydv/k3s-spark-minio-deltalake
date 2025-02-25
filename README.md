@@ -58,6 +58,7 @@ spark.saveAsTable(). An error occurred while calling o148.saveAsTable. : java.la
 ```
 This error is due to a **version mismatch** between Apache Spark and Hadoop libraries. Specifically, certain versions of Spark and Hadoop are incompatible, which causes the method `saveAsTable()` to fail.
 
+
 #### Workaround:
 - **Temporary Solution**: To work around this issue, you can run `spark-submit` directly from inside the container to convert and save tables to Delta format. For example:
   ```bash
